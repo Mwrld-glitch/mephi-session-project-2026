@@ -1,0 +1,57 @@
+    1  echo "Hello from student: DN037" > /data/mephi-web/index.html
+    2  curl http://localhost
+    3  cat /data/mephi-web/index.html
+    4  systemctl status nginx
+    5  exit
+    6  nmcli con mod enp0s3 ipv4.gateway 10.0.2.2 && nmcli con up enp0s3
+    7  ping -c 2 8.8.8.8
+    8  ip -4 addr show enp0s3
+    9  hostname
+   10  ping -c 4 8.8.8.8 > /tmp/network_ckeck.txt
+   11  ping -c 4 192.168.1.1 >> /tmp/network_check.txt
+   12  cd /temp
+   13  cd /tmp
+   14  ls
+   15  cat network_ckeck.txt 
+   16  rm network_ckeck
+   17  rm network_ckeck.txt
+   18  ls
+   19  rm network_check.txt 
+   20  ping -c 4 8.8.8.8 >tmp/network_check.txt
+   21  ping -c 4 8.8.8.8 > tmp/network_check.txt
+   22  ping -c 4 8.8.8.8 > /tmp/network_check.txt
+   23  ls
+   24  ping -c 4 192.168.1.1 >> /tmp/network_check.txt
+   25  cat network_check.txt 
+   26  rpm -q nginx tcpdump libcap-ng-utils
+   27  ls
+   28  ls -l /tmp/tcpdump*.rpm
+   29  dnf download tcpdump --destdir=/tmp
+   30  ls
+   31  ls -l /tmp/tcpdump*.rpm
+   32  lsblk /dev/sdb1
+   33  blkid /dev/sdb1
+   34  rpm -q nginx
+   35  rpm -q tcpdump
+   36  rpm -q libcap-ng-utils
+   37  lsblk | grep /data/mephi-web
+   38  systemctl is-enable nginx
+   39  systemctl is-enabled nginx
+   40  systemctl is-active nginx
+   41  ls
+   42  journalctl -u nginx --since "5 minutes ago" > ~/nginx_recent_logs.txt
+   43  ls
+   44  ls -l /tmp/nginx_recent_logs.txt
+   45  journalctl -u nginx --since "5 minutes ago" > /tmp/nginx_recent_logs.txt
+   46  ls
+   47  cat nginx_recent_logs.txt 
+   48  gatenforce
+   49  getenforce
+   50  ls -Zd /data/mephi-web
+   51  getcap /usr/sbin/tcpdump
+   52  setcap cap_net_raw,cap_net_admin+ep /usr/sbin/tcpdump
+   53  getcap /usr/sbin/tcpdump
+   54  chattr -i /usr/sbin/tcpdump
+   55  tcpdump --help
+   56  curl http://192.168.1.100
+   57  history > ~/project_history.txt
