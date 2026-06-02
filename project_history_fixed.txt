@@ -1,0 +1,107 @@
+hostnamectl set-hostname mephi-2026.domain.local
+nmcli con mod enp0s3 ipv4.addresses 192.168.1.100/24
+nmcli con mod enp0s3 ipv4.gateway 192.168.1.1
+nmcli con mod enp0s3 ipv4.dns 8.8.8.8
+nmcli con mod enp0s3 ipv4.method manual
+nmcli con down enp0s3
+nmcli con up enp0s3
+ping -c 2 192.168.1.1
+ping -c 2 8.8.8.8
+dnf install -y nginx tcpdump libcap-ng-utils
+dnf install -y policycoreutils-python-utils
+cd /tmp
+dnf download tcpdump
+ls
+rpm -ivh tcpdump-*.rpm
+cd
+fdisk /dev/sdb
+mkfs.ext4 -L MEPHI_DATA /dev/sdb1
+mkdir -p /data/mephi-web
+echo "LABEL=MEPHI_DATA /data/mephi-web ext4 defaults 0 0" >> /etc/fstab
+mount -a
+df -h
+systemctl enable nginx
+systemctl start nginx
+systemctl status nginx
+journalctl -u nginx --since "5 minutes ago" > /tmp/nginx_recent_logs.txt
+groupadd mephi-devs
+useradd -G mephi-devs mephi-admin
+echo "P@ssw0rd2026" | passwd --stdin mephi-admin
+cd /data
+chown mephi-admin:mephi-devs mephi-web
+chmod 2775 mephi-web
+ls -ld mephi-web
+cd
+getenforce
+semanage fcontext -a -t httpd_sys_content_t "/data/mephi-web(/.*)?"
+restorecon -Rv /data/mephi-web
+chmod u-s /usr/sbin/tcpdump
+setcap cap_net_raw,cap_net_admin+ep /usr/sbin/tcpdump
+getcap /usr/sbin/tcpdump
+echo "root" > /etc/ssh/denied_users
+echo "auth required pam_listfile.so onerr=succeed item=user sense=deny file=/etc/ssh/denied_users" >> /etc/pam.d/sshd
+echo "auth required pam_listfile.so onerr=succeed item=user sense=deny file=/etc/ssh/denied_users" >> /etc/pam.d/login
+sudo -u mephi-admin tcpdump --help
+cp /etc/fstab fstab.txt
+getenforce > selinux_status.txt
+ls -Zd /data/mephi-web > file_contexts.txt
+getcap /usr/sbin/tcpdump > tcpdump_capabillities.txt
+stat /data/mephi-web > permissions.txt
+id mephi-admin > users_groups.txt
+getent group mephi-devs >> users_groups.txt
+cp /tmp/tcpdump-*.rpm tcpdump.rpm
+sudo -u mephi-admin bash -c 'echo "Hello from student: DN037" > /data/mephi-web/index.html'
+curl http://localhost
+cat /data/mephi-web/index.html
+systemctl status nginx
+exit
+nmcli con mod enp0s3 ipv4.gateway 10.0.2.2 && nmcli con up enp0s3
+ping -c 2 8.8.8.8
+ip -4 addr show enp0s3
+hostname
+ping -c 4 8.8.8.8 > /tmp/network_ckeck.txt
+ping -c 4 192.168.1.1 >> /tmp/network_check.txt
+cd /temp
+cd /tmp
+ls
+cat network_ckeck.txt 
+rm network_ckeck
+rm network_ckeck.txt
+ls
+rm network_check.txt 
+ping -c 4 8.8.8.8 >tmp/network_check.txt
+ping -c 4 8.8.8.8 > tmp/network_check.txt
+ping -c 4 8.8.8.8 > /tmp/network_check.txt
+ls
+ping -c 4 192.168.1.1 >> /tmp/network_check.txt
+cat network_check.txt 
+rpm -q nginx tcpdump libcap-ng-utils
+ls
+ls -l /tmp/tcpdump*.rpm
+dnf download tcpdump --destdir=/tmp
+ls
+ls -l /tmp/tcpdump*.rpm
+lsblk /dev/sdb1
+blkid /dev/sdb1
+rpm -q nginx
+rpm -q tcpdump
+rpm -q libcap-ng-utils
+lsblk | grep /data/mephi-web
+systemctl is-enabled nginx
+systemctl is-active nginx
+ls
+journalctl -u nginx --since "5 minutes ago" > ~/nginx_recent_logs.txt
+ls
+ls -l /tmp/nginx_recent_logs.txt
+journalctl -u nginx --since "5 minutes ago" > /tmp/nginx_recent_logs.txt
+ls
+cat nginx_recent_logs.txt 
+getenforce
+ls -Zd /data/mephi-web
+getcap /usr/sbin/tcpdump
+setcap cap_net_raw,cap_net_admin+ep /usr/sbin/tcpdump
+getcap /usr/sbin/tcpdump
+tcpdump --help
+curl -s http://192.168.1.100 > curl_output.txt
+curl http://192.168.1.100
+history > ~/project_history.txt
